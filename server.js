@@ -10,6 +10,8 @@ import { createServer as createViteServer } from 'vite';
 import { generateMetaInfo } from './seoData.js';
 import { getHeader } from './html-template.js';
 import { promises } from "fs";
+import dotenv from "dotenv";
+dotenv.config();
 
 // Get __dirname equivalent in ES6 modules
 const __filename = fileURLToPath(import.meta.url);
@@ -18,7 +20,7 @@ const __dirname = path.dirname(__filename);
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD;
 process.env.MY_CUSTOM_SECRET = 'API_KEY_qwertyuiop';
 
-async function createServer(root = process.cwd(), isProd = process.env.VITE_NODE_ENV === process.env.VITE_NODE_ENV) {
+async function createServer(root = process.cwd(), isProd = process.env.VITE_NODE_ENV === "production") {
   const resolve = (p) => path.resolve(__dirname, p);
 
   const indexProd = isProd ? fs.readFileSync(resolve('./public/dist/client/index.html'), 'utf-8') : '';
